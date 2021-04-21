@@ -1,0 +1,141 @@
+
+
+            		Assignment 4
+
+1)Select book isbn ,title,author name,from relation book and book_authors inner join on attribute book_isbn.
+
+
+mysql> select book.book_isbn ,book.title, book_authors.author_name from book inner join book_authors on book.book_isbn=book_authors.book_isbn; 
++-----------+----------+-------------+ 
+| book_isbn | title    | author_name | 
++-----------+----------+-------------+ 
+|         8 | java     | amit        | 
+|         7 | web tech | rahul       | 
+|         5 | c#       | saurabh     | 
+|         1 | c++      | sheetal     | 
++-----------+----------+-------------+ 
+4 rows in set (0.00 sec) 
+
+2)Select book isbn ,title,publisher,author name,from relation book and book_authors left outer join on attribute book_isbn.
+
+mysql>    select book.book_isbn ,book.title, book.publisher_name, book_authors.author_name from book left outer join book_authors on                        book.book_isbn=book_authors.book_isbn; 
++-----------+----------+----------------+-------------+ 
+| book_isbn | title    | publisher_name | author_name | 
++-----------+----------+----------------+-------------+ 
+|         1 | c++      | shivam         | sheetal     | 
+|         5 | c#       | gaurav         | saurabh     | 
+|         6 | dbms     | ayush          | NULL        | 
+|         7 | web tech | raghav         | rahul       | 
+|         8 | java     | ayush          | amit        | 
++-----------+----------+----------------+-------------+ 
+5 rows in set (0.00 sec) 
+
+3)Select book isbn ,title,author name,from relation book and book_authors right outer join on attribute book_isbn.
+
+mysql> select book.book_isbn ,book.title, book.publisher_name, book_authors.author_name from book right outer join book_authors on                        book.book_isbn=book_authors.book_isbn; 
++-----------+----------+----------------+-------------+ 
+| book_isbn | title    | publisher_name | author_name | 
++-----------+----------+----------------+-------------+ 
+|         8 | java     | ayush          | amit        | 
+|         7 | web tech | raghav         | rahul       | 
+|         5 | c#       | gaurav         | saurabh     | 
+|         1 | c++      | shivam         | sheetal     | 
++-----------+----------+----------------+-------------+ 
+4 rows in set (0.00 sec) 
+
+4)Select book_isbn,title from relation book whose authoe=r is living in city 'Pune'
+
+mysql> select a.book_isbn,a.title,b.author_name from book a inner join book_authors b on b.author_city='pune'; 
++-----------+----------+-------------+ 
+| book_isbn | title    | author_name | 
++-----------+----------+-------------+ 
+|         1 | c++      | sheetal     | 
+|         1 | c++      | saurabh     | 
+|         5 | c#       | sheetal     | 
+|         5 | c#       | saurabh     | 
+|         6 | dbms     | sheetal     | 
+|         6 | dbms     | saurabh     | 
+|         7 | web tech | sheetal     | 
+|         7 | web tech | saurabh     | 
+|         8 | java     | sheetal     | 
+|         8 | java     | saurabh     | 
++-----------+----------+-------------+ 
+10 rows in set (0.00 sec) 
+
+5)Select book_isbn ,title from relation book which written by more than 2 authors
+
+mysql> select book.book_isbn,book.title from( select count(book_isbn) as aa , book_isbn as b from book_authors group by b)book_authors,book where aa>1 and book 
++-----------+-------+ 
+| book_isbn | title | 
++-----------+-------+ 
+|         1 | c++   | 
+|         5 | c#    | 
++-----------+-------+ 
+2 rows in set (0.00 sec)
+
+6)Select name of author from book_authors relation whose publisher is 'Gaurav'
+
+
+mysql> select book_authors.author_name, book.publisher_name from book inner join book_authors on book.publisher_name='gaurav'where book.book_isbn=book_authors.book_isbn; 
++-------------+----------------+ 
+| author_name | publisher_name | 
++-------------+----------------+ 
+| saurabh     | gaurav         | 
++-------------+----------------+ 
+1 row in set (0.00 sec) 
+
+7)Create a view on book table as dbms_books by selecting all books titled dbms.
+
+mysql>create view dbms_books as select title from book order by title; 
+Query OK, 0 rows affected (0.03 sec) 
+
+ mysql>desc dbms_books; 
++-------+-------------+------+-----+---------+-------+ 
+| Field | Type        | Null | Key | Default | Extra | 
++-------+-------------+------+-----+---------+-------+ 
+| title | varchar(30) | NO   |     | NULL    |       | 
++-------+-------------+------+-----+---------+-------+ 
+1 row in set (0.00 sec) 
+
+8)Select author_name who have not written book 'Java' 
+
+mysql> select book_authors.author_name from book_authors,book  where book.title not in ('java') group by author_name; 
++-------------+ 
+| author_name | 
++-------------+ 
+| amit        | 
+| rahul       | 
+| saurabh     | 
+| sheetal     | 
++-------------+ 
+4 rows in set (0.00 sec) 
+
+9.a)Select book title with their publisher names
+
+mysql> select title ,publisher_name from book; 
++----------+----------------+ 
+| title    | publisher_name | 
++----------+----------------+ 
+| c++      | shivam         | 
+| c#       | gaurav         | 
+| dbms     | ayush          | 
+| web tech | raghav         | 
+| java     | ayush          | 
++----------+----------------+ 
+5 rows in set (0.00 sec) 
+
+
+9.b)Select book title with their author name
+
+mysql> select book.title,book_authors.author_name from book inner join  book_authors on book.book_isbn=book_authors.book_isbn group by author_name; 
++----------+-------------+ 
+| title    | author_name | 
++----------+-------------+ 
+| dbms     | amit        | 
+| web tech | rahul       | 
+| c#       | saurabh     | 
+| c++      | sheetal     | 
++----------+-------------+ 
+4 rows in set (0.00 sec) 
+
+

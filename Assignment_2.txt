@@ -1,0 +1,124 @@
+			      Assignment No. 2
+ 
+ Schema:
+
+book(book_isbn[pk],title[not null],publisher_name,price[check price>0],date_of_publication,book_copy)
+
+book_authors(book_isbn[pk,fk],author_name[pk],author_city)
+
+ 
+MYSQL Starting:
+	
+[student@localhost ~]$ su 
+Password: 
+[root@localhost student]# mysql -u root -p 
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g. 
+Your MySQL connection id is 4 
+Server version: 5.6.25 MySQL Community Server (GPL) 
+
+
+
+mysql> create database B_library; 
+Query OK, 1 row affected (0.00 sec) 
+
+mysql> show databases; 
++--------------------+ 
+| Database           | 
++--------------------+ 
+| information_schema | 
+| A_library          | 
+| B_library          | 
+| employe            | 
+| library            | 
+| mycomp             | 
+| mydata             | 
+| mysql              | 
+| performance_schema | 
+| test               | 
++--------------------+ 
+10 rows in set (0.00 sec) 
+
+mysql> use B_library; 
+Database changed 
+
+
+
+1) Create table book& book_authors with all constraints as per library database.
+
+mysql>create table book(book_isbn numeric ,primary key(book_isbn),title varchar(30) not null,publisher_name varchar(30),price numeric check(price>0),date_of_publication date,book_copy numeric); 
+Query OK, 0 rows affected (0.19 sec) 
+
+mysql> create table book_authors(book_isbn numeric ,author_name varchar(30),primary key(book_isbn,author_name),author_city varchar(30),foreign key(book_isbn) references book(book_isbn)); 
+Query OK, 0 rows affected (0.17 sec) 
+
+mysql> show tables; 
++---------------------+ 
+| Tables_in_B_library | 
++---------------------+ 
+| book                | 
+| book_authors        | 
++---------------------+ 
+2 rows in set (0.00 sec) 
+
+
+2) Create view book_author_info consiting of book_isbn,title from book table and author_name from book_authors table in ascending order of isbn_no.
+
+mysql> create view book_author_info as select a.book_isbn,a.title,b.author_name from book a , book_authors b  order by book_isbn; 
+Query 
+OK, 0 rows affected (0.04 sec) 
+
+mysql> describe book_author_info; 
++-------------+---------------+------+-----+---------+-------+ 
+| Field       | Type          | Null | Key | Default | Extra | 
++-------------+---------------+------+-----+---------+-------+ 
+| book_isbn   | decimal(10,0) | NO   |     | 0       |       | 
+| title       | varchar(30)   | NO   |     | NULL    |       | 
+| author_name | varchar(30)   | NO   |     |         |       | 
++-------------+---------------+------+-----+---------+-------+ 
+3 rows in set (0.00 sec) 
+
+
+3)Create an index  book_index_info from book_authors table
+
+mysql> create index book_info on book_authors(author_name); 
+Query OK, 0 rows affected (0.13 sec) 
+Records: 0  Duplicates: 0  Warnings: 0 
+
+mysql> show index from book_authors; 
++--------------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+ 
+| Table        | Non_unique | Key_name  | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | 
++--------------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+ 
+| book_authors |          0 | PRIMARY   |            1 | book_isbn   | A         |           0 |     NULL | NULL   |      | BTREE      |         |               | 
+| book_authors |          0 | PRIMARY   |            2 | author_name | A         |           0 |     NULL | NULL   |      | BTREE      |         |               | 
+| book_authors |          1 | book_info |            1 | author_name | A         |           0 |     NULL | NULL   |      | BTREE      |         |               | 
++--------------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+ 
+3 rows in set (0.00 sec) 
+
+4)Create table book_auto_increment
+
+mysql> create table book_auto_increment(book_id int auto_increment,primary key(book_id),book_name varchar(30)); 
+Query OK, 0 rows affected (0.16 sec) 
+
+mysql> describe book_auto_increment; 
++-----------+-------------+------+-----+---------+----------------+ 
+| Field     | Type        | Null | Key | Default | Extra          | 
++-----------+-------------+------+-----+---------+----------------+ 
+| book_id   | int(11)     | NO   | PRI | NULL    | auto_increment | 
+| book_name | varchar(30) | YES  |     | NULL    |                | 
++-----------+-------------+------+-----+---------+----------------+ 
+2 rows in set (0.00 sec) 
+
+mysql> insert into book_auto_increment values(1,"dbms"),(2,"toc"),(3,"sdl"); 
+Query OK, 3 rows affected (0.03 sec) 
+Records: 3  Duplicates: 0  Warnings: 0 
+ mysql> select * from book_auto_increment; 
++------------+-------------------+ 
+| book_id | book_name | 
++------------+-------------------+ 
+|             1 | dbms             | 
+|             2 | toc                  | 
+|             3 | sdl                  | 
++------------+-------------------+ 
+3 rows in set (0.00 sec) 
+

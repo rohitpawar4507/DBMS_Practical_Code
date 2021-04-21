@@ -1,0 +1,225 @@
+			Assignment No. 3
+
+1) Insert atleast 5 records in each table
+
+mysql> describe book; 
++---------------------+---------------+------+-----+---------+-------+ 
+| Field               | Type          | Null | Key | Default | Extra | 
++---------------------+---------------+------+-----+---------+-------+ 
+| book_isbn           | decimal(10,0) | NO   | PRI | 0       |       | 
+| title               | varchar(30)   | NO   |     | NULL    |       | 
+| publisher_name      | varchar(30)   | YES  |     | NULL    |       | 
+| price               | decimal(10,0) | YES  |     | NULL    |       | 
+| date_of_publication | date          | YES  |     | NULL    |       | 
+| book_copy           | decimal(10,0) | YES  |     | NULL    |       | 
++---------------------+---------------+------+-----+---------+-------+ 
+6 rows in set (0.01 sec) 
+
+
+mysql> insert into book values(1,"c++","shivam",500,12/2/2000,50),(3,"dsa","rajiv",420,14/3/2004,40); 
+Query OK, 2 rows affected (0.03 sec) 
+Records: 2  Duplicates: 0  Warnings: 0 
+
+mysql> insert into book values(7,"web tech","raghav",300,1/2/2004,30),(8,"java","ayush",520,4/12/2002,240); 
+Query OK, 2 rows affected (0.03 sec) 
+Records: 2  Duplicates: 0  Warnings: 0 
+
+mysql> insert into book values(5,"c#","gaurav",350,10/6/2001,25); 
+Query OK, 1 row affected (0.04 sec) 
+
+mysql> select * from book; 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+| book_isbn | title    | publisher_name | price | date_of_publication | book_copy | 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+|         1 | c++      | shivam         |   500 | 2001-04-02          |        50 | 
+|         3 | dsa      | rajiv          |   420 | 2003-06-12          |        40 | 
+|         5 | c#       | gaurav         |   350 | 2000-10-10          |        25 | 
+|         7 | web tech | raghav         |   300 | 2005-01-16          |        30 | 
+|         8 | java     | ayush          |   520 | 2006-02-04          |       240 | 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+5 rows in set (0.00 sec) 
+
+mysql> describe book_authors; 
++-------------+---------------+------+-----+---------+-------+ 
+| Field       | Type          | Null | Key | Default | Extra | 
++-------------+---------------+------+-----+---------+-------+ 
+| book_isbn   | decimal(10,0) | NO   | PRI | 0       |       | 
+| author_name | varchar(30)   | NO   | PRI |         |       | 
+| author_city | varchar(30)   | YES  |     | NULL    |       | 
++-------------+---------------+------+-----+---------+-------+ 
+3 rows in set (0.00 sec) 
+
+mysql> insert into book_authors values(1,"sheetal","pune"),(8,"amit","mumbai"),(7,"rahul","rajasthan"),(5,"saurabh","pune"),(3,"ajay","pune"); 
+Query OK, 5 rows affected (0.03 sec) 
+Records: 5  Duplicates: 0  Warnings: 0 
+
+mysql> select * from book_authors; 
++-----------+-------------+-------------+ 
+| book_isbn | author_name | author_city | 
++-----------+-------------+-------------+ 
+|         1 | sheetal     | pune        | 
+|         3 | ajay        | pune        | 
+|         5 | saurabh     | pune        | 
+|         7 | rahul       | rajasthan   | 
+|         8 | amit        | mumbai      | 
++-----------+-------------+-------------+ 
+5 rows in set (0.00 sec) 
+
+
+2)Select details of books whose author_city is Pune
+
+mysql> select * from book a,book_authors b where a.book_isbn=b.book_isbn and author_city='pune'; 
++-----------+-------+----------------+-------+---------------------+-----------+-----------+-------------+-------------+ 
+| book_isbn | title | publisher_name | price | date_of_publication | book_copy | book_isbn | author_name | author_city | 
++-----------+-------+----------------+-------+---------------------+-----------+-----------+-------------+-------------+ 
+|         1 | c++   | shivam         |   500 | 2001-04-02          |        50 |         1 | sheetal     | pune        | 
+|         3 | dsa   | rajiv          |   420 | 2003-06-12          |        40 |         3 | ajay        | pune        | 
+|         5 | c#    | gaurav         |   350 | 2000-10-10          |        25 |         5 | saurabh     | pune        | 
++-----------+-------+----------------+-------+---------------------+-----------+-----------+-------------+-------------+ 
+3 rows in set (0.00 sec) 
+
+
+3)Select book names from table book whose copies are in between 30 to 40
+
+mysql> select title from book where book_copy between 30 and 40; 
++----------+ 
+| title    | 
++----------+ 
+| dsa      | 
+| web tech | 
++----------+ 
+2 rows in set (0.00 sec) 
+
+
+4)Update book copies as 10 whose book publisher is Shivam
+ 
+mysql> update book set book_copy=10 where publisher_name="shivam"; 
+Query OK, 1 row affected (0.02 sec) 
+Rows matched: 1  Changed: 1  Warnings: 0 
+
+mysql> select * from book; 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+| book_isbn | title    | publisher_name | price | date_of_publication | book_copy | 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+|         1 | c++      | shivam         |   500 | 2001-04-02          |        10 | 
+|         3 | dsa      | rajiv          |   420 | 2003-06-12          |        40 | 
+|         5 | c#       | gaurav         |   350 | 2000-10-10          |        25 | 
+|         7 | web tech | raghav         |   300 | 2005-01-16          |        30 | 
+|         8 | java     | ayush          |   520 | 2006-02-04          |       240 | 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+5 rows in set (0.00 sec) 
+
+5. a)Select name of publisher who supplied maximum books
+
+mysql>select max(aa),a from (select sum(book_copy)as aa,publisher_name as a from book group by a order by aa desc)book; 
++---------+--------+ 
+| max(aa) | a      | 
++---------+--------+ 
+|     330 | raghav | 
++---------+--------+ 
+1 row in set (0.00 sec) 
+
+5.b) Select name of publisher who published maximum books
+
+mysql> select max(aa), a from(select count(publisher_name) as aa,publisher_name as a from book group by a order by aa desc )book; 
++---------+-------+ 
+| max(aa) | a     | 
++---------+-------+ 
+|       2 | ayush | 
++---------+-------+ 
+1 row in set (0.00 sec) 
+
+6)Display name of publishers as per no. of books published by them in ascending order.
+
+mysql> select publisher_name,book_copy from book group by publisher_name asc; 
++----------------+-----------+ 
+| publisher_name | book_copy | 
++----------------+-----------+ 
+| ayush          |       240 | 
+| gaurav         |        25 | 
+| raghav         |       330 | 
+| rajiv          |        40 | 
+| shivam         |        10 | 
++----------------+-----------+ 
+5 rows in set (0.00 sec) 
+
+mysql> select * from book; 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+| book_isbn | title    | publisher_name | price | date_of_publication | book_copy | 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+|         1 | c++      | shivam         |   500 | 2001-04-02          |        10 | 
+|         3 | dsa      | rajiv          |   420 | 2003-06-12          |        40 | 
+|         5 | c#       | gaurav         |   350 | 2000-10-10          |        25 | 
+|         7 | web tech | raghav         |   300 | 2005-01-16          |       330 | 
+|         8 | java     | ayush          |   520 | 2006-02-04          |       240 | 
++-----------+----------+----------------+-------+---------------------+-----------+ 
+5 rows in set (0.00 sec) 
+
+7)Get publisher name who published atleast  one book written by author name like 'a%'
+
+mysql> select a.publisher_name from book a,book_authors b where  a.book_isbn=b.book_isbn and b.author_name like'a%'; 
++----------------+ 
+| publisher_name | 
++----------------+ 
+| rajiv          | 
+| ayush          | 
++----------------+ 
+2 rows in set (0.00 sec)\
+
+8)Get book name and author name where book written by   maximum authors
+
+mysql> select max(aa),a,book.title from (select count(author_name)as aa,author_name as a from book_authors group by a order by aa desc)book_authors,book; 
++---------+------+-------+ 
+| max(aa) | a    | title | 
++---------+------+-------+ 
+|       2 | amit | c++   | 
++---------+------+-------+ 
+1 row in set (0.00 sec) 
+
+9)Get publisher name accordingly books published alphabetically
+
+mysql> select date_of_publication,publisher_name from book order by date_of_publication; 
++---------------------+----------------+ 
+| date_of_publication | publisher_name | 
++---------------------+----------------+ 
+| 2000-10-10          | gaurav         | 
+| 2001-04-02          | shivam         | 
+| 2003-06-12          | rajiv          | 
+| 2005-01-16          | raghav         | 
+| 2006-02-04          | ayush          | 
++---------------------+----------------+ 
+5 rows in set (0.00 sec) 
+
+
+10)Find no. of books published in 6 december,2012 to till date
+
+mysql> select count(date_of_publication) from book where date_of_publication between '2003-06-12' and '2019-07-18'; 
++----------------------------+ 
+| count(date_of_publication) | 
++----------------------------+ 
+|                          3 | 
++----------------------------+ 
+1 row in set (0.00 sec) 
+
+11) Delete the book from book_table by Author 'Ajay'
+
+mysql> delete a,b from book as  b inner join book_authors as a where a.book_isbn=b.book_isbn and a.author_name='ajay'; 
+Query OK, 2 rows affected (0.04 sec) 
+
+
+mysql> select * from book_authors; 
++-----------+-------------+-------------+ 
+| book_isbn | author_name | author_city | 
++-----------+-------------+-------------+ 
+|         1 | sheetal     | pune        | 
+|         5 | saurabh     | pune        | 
+|         7 | rahul       | rajasthan   | 
+|         8 | amit        | mumbai      | 
++-----------+-------------+-------------+ 
+4 rows in set (0.00 sec) 
+
+
+
+
+
+

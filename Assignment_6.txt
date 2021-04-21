@@ -1,0 +1,125 @@
+		Assignment No 6 : 
+           PARAMETRISED CURSOR
+
+SQL*Plus: Release 11.2.0.2.0 Production on Wed Oct 3 08:41:57 2018 
+
+Copyright (c) 1982, 2011, Oracle.  All rights reserved. 
+
+Use "connect username/password@XE" to connect to the database. 
+
+SQL> connect system 
+Enter password: 
+Connected. 
+SQL> set serveroutput on 
+
+SQL>  create table o_roll(rollno numeric,name varchar(20)); 
+
+Table created. 
+SQL> create table n_roll(rollno numeric,name varchar(20)); 
+
+Table created. 
+
+
+SQL> insert into o_roll values(10,'amit'); 
+
+1 row created. 
+
+SQL> insert into o_roll values(12,'rahul'); 
+
+1 row created. 
+
+SQL> insert into o_roll values(13,'shiv'); 
+
+1 row created. 
+
+SQL> insert into o_roll values(14,'dhruv'); 
+
+1 row created. 
+
+SQL> ed 
+Wrote file afiedt.buf 
+40 
+
+
+
+declare 
+r o_roll.rollno%type; 
+n o_roll.name%type; 
+cursor old is select * from o_roll; 
+cursor new (no number)is select rollno from n_roll where rollno=no; 
+
+begin 
+open old; 
+loop 
+fetch 
+old into r,n; 
+exit when old%notfound; 
+open new(r); 
+fetch new into r; 
+if new%found then 
+dbms_output.put_line('record found'); 
+else if new%notfound then 
+dbms_output.put_line('new student'); 
+insert into n_roll values(r,n); 
+end if; 
+end if; 
+
+close new; 
+end loop; 
+close old; 
+end;
+
+
+
+
+q 
+
+  1  declare 
+  2  r o_roll.rollno%type; 
+  3  n o_roll.name%type; 
+  4  cursor old is select * from o_roll; 
+  5  cursor new (no number)is select rollno from n_roll where rollno=no; 
+  6  begin 
+  7  open old; 
+  8  loop 
+  9  fetch 
+ 10  old into r,n; 
+ 11  exit when old%notfound; 
+ 12  open new(r); 
+ 13  fetch new into r; 
+ 14  if new%found then 
+ 15  dbms_output.put_line('record found'); 
+ 16  else if new%notfound then 
+ 17  dbms_output.put_line('new student'); 
+ 18  insert into n_roll values(r,n); 
+ 19  end if; 
+ 20  end if; 
+ 21  close new; 
+ 22  end loop; 
+ 23  close old; 
+ 24* end; 
+ 25  / 
+new student 
+record found 
+new student 
+new student 
+
+PL/SQL procedure successfully completed. 
+
+SQL> select * from o_roll; 
+
+    ROLLNO NAME 
+---------- -------------------- 
+	10 amit 
+	12 rahul 
+	13 shiv 
+	14 dhruv 
+
+SQL> select * from n_roll; 
+
+    ROLLNO NAME 
+---------- -------------------- 
+	12 rahul 
+	10 amit 
+	13 shiv 
+	14 dhruv 

@@ -1,0 +1,194 @@
+                     			Assignment No 7
+
+
+
+
+SQL> create table student(rollno numeric ,name varchar(20),marks numeric); 
+
+Table created. 
+
+SQL>  create table result(rollno numeric, marks numeric,grade varchar(20)); 
+
+Table created. 
+
+SQL> insert into student values(10,'amit',85); 
+
+1 row created. 
+
+SQL> insert into student values(11,'rahul',74); 
+
+1 row created. 
+
+SQL> insert into student values(12,'raj',90); 
+
+1 row created. SQL> insert into student values (14,'shiv',78); 
+
+1 row created. 
+
+SQL> ed 
+Wrote file afiedt.buf 
+44 
+
+
+declare 
+r_no student.rollno%type; 
+sname student.name%type; 
+mark student.marks%type; 
+Grade result.grade%type; 
+r student.rollno%type; 
+
+procedure proc_grade(marks in number, grade out varchar)is 
+
+begin 
+
+if(marks<=100)and (marks>=90)then 
+grade:='Distinction'; 
+else if(marks<=89)and (marks>=80)then 
+grade:='First'; 
+else if(marks<=79)and (marks>=65)then 
+grade:='higher second'; 
+end if; 
+end if; 
+end if; 
+end; 
+begin 
+r:=&r; 
+select rollno,name,marks into r_no,sname,mark from student where rollno=r; 
+proc_grade(mark,Grade); 
+dbms_output.put_line('Grade'||Grade); 
+insert into result values(r_no,mark,Grade); 
+end; 
+
+
+
+q 
+
+  1  declare 
+  2  r_no student.rollno%type; 
+  3  sname student.name%type; 
+  4  mark student.marks%type; 
+  5  Grade result.grade%type; 
+  6  r student.rollno%type; 
+  7  procedure proc_grade(marks in number, grade out varchar)is 
+  8  begin 
+  9  if(marks<=100)and (marks>=90)then 
+ 10  grade:='Distinction'; 
+ 11  else if(marks<=89)and (marks>=80)then 
+ 12  grade:='First'; 
+ 13  else if(marks<=79)and (marks>=65)then 
+ 14  grade:='higher second'; 
+ 15  end if; 
+ 16  end if; 
+ 17  end if; 
+ 18  end; 
+ 19  begin 
+ 20  r:=&r; 
+ 21  select rollno,name,marks into r_no,sname,mark from student where rollno=r; 
+ 22  proc_grade(mark,Grade); 
+ 23  dbms_output.put_line('Grade'||Grade); 
+ 24  insert into result values(r_no,mark,Grade); 
+ 25* end; 
+ 26  / 
+Enter value for r: 12 
+old  20: r:=&r; 
+new  20: r:=12; 
+GradeDistinction 
+
+PL/SQL procedure successfully completed. 
+ 
+SQL> select * from result; 
+
+    ROLLNO	MARKS GRADE 
+---------- ---------- -------------------- 
+	12	   90 Distinction
+
+
+			Function:
+
+declare 
+r_no student.rollno%type; 
+sname student.name%type; 
+mark student.marks%type; 
+Grade result.grade%type; 
+g varchar(20); 
+r student.rollno%type; 
+
+function proc_grade(marks in number, grade out varchar)return varchar is 
+
+begin 
+
+if(marks<=100)and (marks>=90)then 
+grade:='Distinction'; 
+else if(marks<=89)and (marks>=80)then 
+grade:='First'; 
+else if(marks<=79)and (marks>=65)then 
+grade:='higher second'; 
+end if; 
+end if; 
+end if; 
+return grade; 
+end; 
+begin 
+r:=&r; 
+select rollno,name,marks into r_no,sname,mark from student where rollno=r; 
+g:=proc_grade(mark,Grade); 
+dbms_output.put_line('Grade'||g); 
+insert into result values(r_no,mark,g); 
+end; 
+
+
+SQL> ed 
+Wrote file afiedt.buf 
+23 
+q 
+
+  1  declare 
+  2  r_no student.rollno%type; 
+  3  sname student.name%type; 
+  4  mark student.marks%type; 
+  5  Grade result.grade%type; 
+  6  g varchar(20); 
+  7  r student.rollno%type; 
+  8  function proc_grade(marks in number, grade out varchar)return varchar is 
+  9  begin 
+ 10  if(marks<=100)and (marks>=90)then 
+ 11  grade:='Distinction'; 
+ 12  else if(marks<=89)and (marks>=80)then 
+ 13  grade:='First'; 
+ 14  else if(marks<=79)and (marks>=65)then 
+ 15  grade:='higher second'; 
+ 16  end if; 
+ 17  end if; 
+ 18  end if; 
+ 19  return grade; 
+ 20  end; 
+ 21  begin 
+ 22  r:=&r; 
+ 23  select rollno,name,marks into r_no,sname,mark from student where rollno=r; 
+ 24  g:=proc_grade(mark,Grade); 
+ 25  dbms_output.put_line('Grade'||g); 
+ 26  insert into result values(r_no,mark,g); 
+ 27* end; 
+ 28  / 
+Enter value for r: 11 
+old  22: r:=&r; 
+new  22: r:=11; 
+Gradehigher second 
+
+PL/SQL procedure successfully completed. 
+
+SQL> select * from result; 
+
+    ROLLNO	MARKS GRADE 
+---------- ---------- -------------------- 
+	12	   90 Distinction 
+	11	   74 higher second 
+
+SQL> select * from student; 
+
+    ROLLNO NAME 		     MARKS 
+---------- -------------------- ---------- 
+	10 amit 			85 
+	11 rahul			74 
+	12 raj				90 
+	14 shiv 			78 

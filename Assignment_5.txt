@@ -1,0 +1,127 @@
+Assignment No 5
+
+Problem Statement:- Write PL/SQL Block of code for different applications
+
+SQL> connect system; 
+Enter password: ****
+
+
+Connected. 
+SQL> set serveroutput on 
+SQL> create table Borrower_v(Roll_no numeric,name varchar(20),Date_of_issue date,Name_of_book varchar(20),status varchar(15),Date_of_return date); 
+
+Table created. 
+
+SQL> create table Fine_v(Roll_no numeric,Date_of_Issue date,Amount numeric); 
+
+Table created. 
+SQL> insert into Borrower_v values(101,'nilima','22-jan-2018','CN','I','5-june-2018'); 
+
+1 row created. 
+SQL> insert into Borrower_v values(102,'gauravi','18-april-2018','OOP','I','30-april-2018'); 
+
+1 row created. 
+
+SQL> insert into Borrower_v values(103,'sanavi','20-june-2017','DATABASE','I','30-june-2017'); 
+
+1 row created. 
+
+SQL> insert into Borrower_v values(104,'gauri','11-feb-2018','PPL','I','28-FEB-2018'); 
+
+1 row created. 
+SQL> select* from Borrower_v; 
+
+ROLL_NO NAME 	DATE_OF_ISSUE	   NAME_OF_BOOK    STATUS     DATE_OF_RETURN 
+
+       101 nilima		22-JAN-18	                 CN                       I               05-JUN-18 
+		
+
+       102 gauravi		18-APR-18	   OOP                                   I		   30-APR-18 
+
+       103 sanavi		20-JUN-17	   DATABASE                      I		   30-JUN-17 
+
+
+       104 gauri		             11-FEB-18	   PPL                                    I              28-FEB-18 
+
+SQL> alter table Borrower_v add primary key(Roll_no); 
+
+Table altered. 
+
+SQL> alter table Fine_v add primary key(Roll_no); 
+
+Table altered. 
+SQL> ed 
+Wrote file afiedt.buf 
+686 
+q 
+
+  1  declare 
+  2	rollno Borrower_v.Roll_no%type; 
+  3	Bname Borrower_v.Name_of_book%type; 
+  4	d_i date; 
+  5	days numeric; 
+  6	fine numeric; 
+  7	today date; 
+  8	procedure Fine_cal(days IN numeric,fine OUT numeric) IS 
+  9	begin 
+ 10	if((days>=14) and (days<=30))then 
+ 11	fine:=5*days; 
+ 12	 else 
+ 13	if(days>30)then 
+ 14	fine:=50*days; 
+ 15	else 
+ 16	fine:=0; 
+ 17	end if; 
+ 18	end if; 
+ 19	end; 
+ 20	begin 
+ 21	rollno:=&rollno; 
+ 22	Bname:=&Bname; 
+ 23	select Date_of_issue into (d_i) from Borrower_v where Roll_no=rollno and Name_of_book like Bname; 
+ 24	days:=sysdate-d_i; 
+ 25	Fine_cal(days,fine); 
+ 26	today:=sysdate; 
+ 27	insert into Fine_v values(rollno,today,fine); 
+ 28	update Borrower_v set status='R' where rollno=Roll_no; 
+ 29*	end; 
+ 30  / 
+Enter value for rollno: 101 
+old  21:    rollno:=&rollno; 
+new  21:    rollno:=101; 
+Enter value for bname: 'CN' 
+old  22:    Bname:=&Bname; 
+new  22:    Bname:='CN'; 
+
+PL/SQL procedure successfully completed. 
+
+SQL> select * from Fine_v; 
+
+   ROLL_NO DATE_OF_ISSUE	  AMOUNT 
+---------- ------------------ ---------- 
+       101 26-SEP-18		   12350 
+
+SQL> select * from Borrower_v; 
+
+   ROLL_NO NAME 		DATE_OF_ISSUE	   NAME_OF_BOOK 
+---------- -------------------- ------------------ -------------------- 
+STATUS		DATE_OF_RETURN 
+--------------- ------------------ 
+       101 nilima		22-JAN-18	   CN 
+R		05-JUN-18 
+
+       102 gauravi		18-APR-18	   OOP 
+I		30-APR-18 
+
+       103 sanavi		20-JUN-17	   DATABASE 
+I		30-JUN-17 
+
+
+   ROLL_NO NAME 		DATE_OF_ISSUE	   NAME_OF_BOOK 
+---------- -------------------- ------------------ -------------------- 
+STATUS		DATE_OF_RETURN 
+--------------- ------------------ 
+       104 gauri		11-FEB-18	   PPL 
+I		28-FEB-18 
+
+
+SQL> 

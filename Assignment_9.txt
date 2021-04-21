@@ -1,0 +1,307 @@
+                                         Assignment No 9       
+
+(base) [student@localhost ~]$ mongo 
+MongoDB shell version: 2.4.6 
+connecting to: test 
+> db.book.insert({"Book_ISBN":1,"Title":"JAVA","Publisher_name":"Pearson","author":{"Author_name":"Mr.Bagal","Author_address":"Pune","phone":[{"Author_phone":"9922778844"},{"landline":021346512}]},"Publisher_city":"Pune","Price":250,"Copy":100}); 
+> db.book.insert({"Book_ISBN":8,"Title":"CN","Publisher_name":"Pearson","author":[{"Author_name":"Mr.Bagal","Author_address":"Pune","phone":[{"Author_phone":"9922778844"},{"landline":021346512}]},{"Author_name":"Mr.sehgal","Author_address":"Mumbai","phone":[{"Author_phone":"998988776"},{"landline":90909090}]}],"Publisher_city":"Thane","Price":678,"Copy":200}); 
+> db.book.insert({"Book_ISBN":5,"Title":"TOC","Publisher_name":"Pranav","author":[{"Author_name":"SHAHA","Author_address":"delhi","phone":[{"Author_phone":"9965434455"},{"landline":898764332}]},{"Author_name":"varsha","Author_address":"Mumbai","phone":[{"Author_phone":"9898976654"},{"landline":987654543257}]}],"Publisher_city":"Delhi","Price":500,"Copy":70}); 
+> db.book.find().pretty(); 
+{ 
+	"_id" : ObjectId("5d899e5b6db46d6c825f4ccb"), 
+	"Book_ISBN" : 1, 
+	"Title" : "JAVA", 
+	"Publisher_name" : "Pearson", 
+	"author" : { 
+		"Author_name" : "Mr.Bagal", 
+		"Author_address" : "Pune", 
+		"phone" : [ 
+			{ 
+				"Author_phone" : "9922778844" 
+			}, 
+			{ 
+				"landline" : 4574538 
+			} 
+		] 
+	}, 
+	"Publisher_city" : "Pune", 
+	"Price" : 250, 
+	"Copy" : 100 
+} 
+{ 
+	"_id" : ObjectId("5d899e7f6db46d6c825f4ccc"), 
+	"Book_ISBN" : 8, 
+	"Title" : "CN", 
+	"Publisher_name" : "Pearson", 
+	"author" : [ 
+		{ 
+			"Author_name" : "Mr.Bagal", 
+			"Author_address" : "Pune", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9922778844" 
+				}, 
+				{ 
+					"landline" : 4574538 
+				} 
+			] 
+		}, 
+		{ 
+			"Author_name" : "Mr.sehgal", 
+			"Author_address" : "Mumbai", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "998988776" 
+				}, 
+				{ 
+					"landline" : 90909090 
+				} 
+			] 
+		} 
+	], 
+	"Publisher_city" : "Thane", 
+	"Price" : 678, 
+	"Copy" : 200 
+} 
+{ 
+	"_id" : ObjectId("5d899eb06db46d6c825f4ccd"), 
+	"Book_ISBN" : 5, 
+	"Title" : "TOC", 
+	"Publisher_name" : "Pranav", 
+	"author" : [ 
+		{ 
+			"Author_name" : "SHAHA", 
+			"Author_address" : "delhi", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9965434455" 
+				}, 
+				{ 
+					"landline" : 898764332 
+				} 
+			] 
+		}, 
+		{ 
+			"Author_name" : "varsha", 
+			"Author_address" : "Mumbai", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9898976654" 
+				}, 
+				{ 
+					"landline" : 987654543257 
+				} 
+			] 
+		} 
+	], 
+	"Publisher_city" : "Delhi", 
+	"Price" : 500, 
+	"Copy" : 70 
+} 
+2.publisher lives in pune
+> db.book.find({"Publisher_city":"Pune"}).pretty() 
+{ 
+	"_id" : ObjectId("5d899e5b6db46d6c825f4ccb"), 
+	"Book_ISBN" : 1, 
+	"Title" : "JAVA", 
+	"Publisher_name" : "Pearson", 
+	"author" : { 
+		"Author_name" : "Mr.Bagal", 
+		"Author_address" : "Pune", 
+		"phone" : [ 
+			{ 
+				"Author_phone" : "9922778844" 
+			}, 
+			{ 
+				"landline" : 4574538 
+			} 
+		] 
+	}, 
+	"Publisher_city" : "Pune", 
+	"Price" : 250, 
+	"Copy" : 100 
+} 
+3.delete
+> db.book.remove({$and:[{"Title":{$gte:"J"}},{"Title":{$lt:"K"}}]}) 
+> db.book.find().pretty(); 
+{ 
+	"_id" : ObjectId("5d899e7f6db46d6c825f4ccc"), 
+	"Book_ISBN" : 8, 
+	"Title" : "CN", 
+	"Publisher_name" : "Pearson", 
+	"author" : [ 
+		{ 
+			"Author_name" : "Mr.Bagal", 
+			"Author_address" : "Pune", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9922778844" 
+				}, 
+				{ 
+					"landline" : 4574538 
+				} 
+			] 
+		}, 
+		{ 
+			"Author_name" : "Mr.sehgal", 
+			"Author_address" : "Mumbai", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "998988776" 
+				}, 
+				{ 
+					"landline" : 90909090 
+				} 
+			] 
+		} 
+	], 
+	"Publisher_city" : "Thane", 
+	"Price" : 678, 
+	"Copy" : 200 
+} 
+{ 
+	"_id" : ObjectId("5d899eb06db46d6c825f4ccd"), 
+	"Book_ISBN" : 5, 
+	"Title" : "TOC", 
+	"Publisher_name" : "Pranav", 
+	"author" : [ 
+		{ 
+			"Author_name" : "SHAHA", 
+			"Author_address" : "delhi", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9965434455" 
+				}, 
+				{ 
+					"landline" : 898764332 
+				} 
+			] 
+		}, 
+		{ 
+			"Author_name" : "varsha", 
+			"Author_address" : "Mumbai", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9898976654" 
+				}, 
+				{ 
+					"landline" : 987654543257 
+				} 
+			] 
+		} 
+	], 
+	"Publisher_city" : "Delhi", 
+	"Price" : 500, 
+	"Copy" : 70 
+} 
+4.upadate city
+>  db.book.update({"Publisher_name":"Pearson"},{$set:{"Publisher_city":"Mumbai"}}) 
+> db.book.find().pretty(); 
+{ 
+	"Book_ISBN" : 8, 
+	"Copy" : 200, 
+	"Price" : 678, 
+	"Publisher_city" : "Mumbai", 
+	"Publisher_name" : "Pearson", 
+	"Title" : "CN", 
+	"_id" : ObjectId("5d899e7f6db46d6c825f4ccc"), 
+	"author" : [ 
+		{ 
+			"Author_name" : "Mr.Bagal", 
+			"Author_address" : "Pune", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9922778844" 
+				}, 
+				{ 
+					"landline" : 4574538 
+				} 
+			] 
+		}, 
+		{ 
+			"Author_name" : "Mr.sehgal", 
+			"Author_address" : "Mumbai", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "998988776" 
+				}, 
+				{ 
+					"landline" : 90909090 
+				} 
+			] 
+		} 
+	] 
+} 
+{ 
+	"_id" : ObjectId("5d899eb06db46d6c825f4ccd"), 
+	"Book_ISBN" : 5, 
+	"Title" : "TOC", 
+	"Publisher_name" : "Pranav", 
+	"author" : [ 
+		{ 
+			"Author_name" : "SHAHA", 
+			"Author_address" : "delhi", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9965434455" 
+				}, 
+				{ 
+					"landline" : 898764332 
+				} 
+			] 
+		}, 
+		{ 
+			"Author_name" : "varsha", 
+			"Author_address" : "Mumbai", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9898976654" 
+				}, 
+				{ 
+					"landline" : 987654543257 
+				} 
+			] 
+		} 
+	], 
+	"Publisher_city" : "Delhi", 
+	"Price" : 500, 
+	"Copy" : 70 
+} 
+5.publisher details
+> db.book.find({"Publisher_name":"Pearson"}).pretty() 
+{ 
+	"Book_ISBN" : 8, 
+	"Copy" : 200, 
+	"Price" : 678, 
+	"Publisher_city" : "Mumbai", 
+	"Publisher_name" : "Pearson", 
+	"Title" : "CN", 
+	"_id" : ObjectId("5d899e7f6db46d6c825f4ccc"), 
+	"author" : [ 
+		{ 
+			"Author_name" : "Mr.Bagal", 
+			"Author_address" : "Pune", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "9922778844" 
+				}, 
+				{ 
+					"landline" : 4574538 
+				} 
+			] 
+		}, 
+		{ 
+			"Author_name" : "Mr.sehgal", 
+			"Author_address" : "Mumbai", 
+			"phone" : [ 
+				{ 
+					"Author_phone" : "998988776" 
+				}, 
+				{ 
+					"landline" : 90909090 
+				} 
+			] 
+		} 
+	] 
+} 
+> 

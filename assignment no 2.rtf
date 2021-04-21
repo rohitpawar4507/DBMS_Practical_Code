@@ -1,0 +1,428 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\qc\b\f0\fs28\lang9 Assignment no 2\par
+Group B\b0\fs22\par
+
+\pard\sa200\sl276\slmult1 Microsoft Windows [Version 6.1.7601]\par
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.\par
+\par
+C:\\Users\\Rohit>cd d:/MongoDB/bin\par
+\par
+C:\\Users\\Rohit>d:\par
+\par
+d:\\MongoDB\\bin>mongo\par
+MongoDB shell version v4.2.11\par
+MongoDB server version: 4.2.11\par
+2020-12-06T09:30:11.479+0530 I  CONTROL  [initandlisten]\par
+> show collections;\par
+Book\par
+book\par
+student\par
+> db.Book.find().pretty();\par
+\{\par
+        "_id" : ObjectId("5fcc62771ae00198771e1e8d"),\par
+        "book_isbn" : 102,\par
+        "title" : "TOC",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 200,\par
+        "copies" : 10\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc62ed1ae00198771e1e8e"),\par
+        "book_isbn" : 102,\par
+        "title" : "CN",\par
+        "publisher_name" : "Elsevier",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc63361ae00198771e1e8f"),\par
+        "book_isbn" : 103,\par
+        "title" : "DS",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc63a41ae00198771e1e90"),\par
+        "book_isbn" : 103,\par
+        "title" : "c++",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "pune",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : 20\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc77f56d812b3b204c1741"),\par
+        "book_isbn" : 2,\par
+        "title" : "TOC",\par
+        "publisher_name" : "Tata MacGraw Hill",\par
+        "author" : \{\par
+                "name" : "korth",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : "10"\par
+\}\par
+1) count the number of documents in the collection\b .\par
+\b0 > db.Book.find().count();\par
+5\par
+2)arrange\b  \b0 the documents in descending order of book_isbn.\par
+> db.Book.find().pretty().sort(\{"book_isbn":-1\});\par
+\{\par
+        "_id" : ObjectId("5fcc63361ae00198771e1e8f"),\par
+        "book_isbn" : 103,\par
+        "title" : "DS",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc63a41ae00198771e1e90"),\par
+        "book_isbn" : 103,\par
+        "title" : "c++",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "pune",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : 20\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc62771ae00198771e1e8d"),\par
+        "book_isbn" : 102,\par
+        "title" : "TOC",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 200,\par
+        "copies" : 10\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc62ed1ae00198771e1e8e"),\par
+        "book_isbn" : 102,\par
+        "title" : "CN",\par
+        "publisher_name" : "Elsevier",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc77f56d812b3b204c1741"),\par
+        "book_isbn" : 2,\par
+        "title" : "TOC",\par
+        "publisher_name" : "Tata MacGraw Hill",\par
+        "author" : \{\par
+                "name" : "korth",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : "10"\par
+\}\par
+3)select Book names whose title is "TOC".\par
+\par
+> db.Book.find(\{"title":"TOC"\}).pretty();\par
+\{\par
+        "_id" : ObjectId("5fcc62771ae00198771e1e8d"),\par
+        "book_isbn" : 102,\par
+        "title" : "TOC",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 200,\par
+        "copies" : 10\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc77f56d812b3b204c1741"),\par
+        "book_isbn" : 2,\par
+        "title" : "TOC",\par
+        "publisher_name" : "Tata MacGraw Hill",\par
+        "author" : \{\par
+                "name" : "korth",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : "10"\par
+\}\par
+\par
+4)Update book copies as "10" whose book publisher is "Tata MacGraw Hill".\par
+> db.Book.update(\{"publisher_name":"Tata MacGraw Hill"\},\{$set:\{"copies":"10"\}\});\par
+WriteResult(\{ "nMatched" : 1, "nUpserted" : 0, "nModified" : 0 \})\par
+> db.Book.find().pretty();\par
+\{\par
+        "_id" : ObjectId("5fcc62771ae00198771e1e8d"),\par
+        "book_isbn" : 102,\par
+        "title" : "TOC",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 200,\par
+        "copies" : 10\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc62ed1ae00198771e1e8e"),\par
+        "book_isbn" : 102,\par
+        "title" : "CN",\par
+        "publisher_name" : "Elsevier",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc63361ae00198771e1e8f"),\par
+        "book_isbn" : 103,\par
+        "title" : "DS",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc63a41ae00198771e1e90"),\par
+        "book_isbn" : 103,\par
+        "title" : "c++",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "pune",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : 20\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc77f56d812b3b204c1741"),\par
+        "book_isbn" : 2,\par
+        "title" : "TOC",\par
+        "publisher_name" : "Tata MacGraw Hill",\par
+        "author" : \{\par
+                "name" : "korth",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : "10"\par
+\}\par
+5)display name of publishers as per no of books published by them in ascending order.\b\par
+\b0 > db.Book.find(\{\},\{"publisher_name":1,_id:0\}).sort(\{"copies":1\});\par
+\{ "publisher_name" : "TATA" \}\par
+\{ "publisher_name" : "TATA" \}\par
+\{ "publisher_name" : "Elsevier" \}\par
+\{ "publisher_name" : "TATA" \}\par
+\{ "publisher_name" : "Tata MacGraw Hill" \}\par
+>\par
+6)get publisher name who published at least one book written by author name like 'K'%'.\par
+> db.Book.find(\{$and:[\{"author_name":\{$gte:"U"\}\},\{"author_name":\{$lt:"k"\}\}]\},\{"publisher_name":1,_id:0\});\par
+\par
+7)delete the book from Book table written by author 'korth'.\par
+> db.Book.remove(\{"author_name":"korth"\});\par
+WriteResult(\{ "nRemoved" : 0 \})\par
+> db.Book.find().pretty();\par
+\{\par
+        "_id" : ObjectId("5fcc62771ae00198771e1e8d"),\par
+        "book_isbn" : 102,\par
+        "title" : "TOC",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 200,\par
+        "copies" : 10\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc62ed1ae00198771e1e8e"),\par
+        "book_isbn" : 102,\par
+        "title" : "CN",\par
+        "publisher_name" : "Elsevier",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc63361ae00198771e1e8f"),\par
+        "book_isbn" : 103,\par
+        "title" : "DS",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "pune",\par
+        "price" : 180,\par
+        "copies" : 30\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc63a41ae00198771e1e90"),\par
+        "book_isbn" : 103,\par
+        "title" : "c++",\par
+        "publisher_name" : "TATA",\par
+        "author" : \{\par
+                "name" : "Ullman",\par
+                "address" : "pune",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : 20\par
+\}\par
+\{\par
+        "_id" : ObjectId("5fcc77f56d812b3b204c1741"),\par
+        "book_isbn" : 2,\par
+        "title" : "TOC",\par
+        "publisher_name" : "Tata MacGraw Hill",\par
+        "author" : \{\par
+                "name" : "korth",\par
+                "address" : "mumbai",\par
+                "phone_no" : [\par
+                        9999999999,\par
+                        1234567890\par
+                ]\par
+        \},\par
+        "publisher_city" : "mumbai",\par
+        "price" : 300,\par
+        "copies" : "10"\par
+\}\par
+>\par
+\b\par
+\b0        \par
+}
+ 
